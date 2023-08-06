@@ -200,7 +200,7 @@ batch3
 batch4 <- rep(as.numeric(covar$RUVrW_2, each=nrow(z)))
 batch4
 matrix <- data.frame(m, Condition=dis, Age=age, Sex=sex, Project_Numeric=study, Strategy_Numeric=strategy)
-fit1 <- lm(counts ~ Condition + Age + Sex + Project_Numeric + Strategy_Numeric, data=matrix) 
+fit1 <- lm(counts ~ Condition + Age + Sex + Project_Numeric + Strategy_Numeric + braak + RIN, data=matrix) 
 summary(fit1)
 a <- anova(fit1)
 pdf(file="Anovar.pdf")
@@ -208,7 +208,6 @@ maxval = 100
 nfac <- length(a[,1])-1
 barplot(100*a$"Sum Sq"[1:nfac]/sum(a$"Sum Sq"[1:nfac]),names.arg=rownames(a[1:nfac,]),ylim=c(0,maxval),las=3)
 dev.off()
-
 
 # limma removeBatchEffect to visualise effect of removing batch using a linear model
 reads_forlim <- data.frame(reads_norm)
@@ -272,7 +271,6 @@ pdf("Contrast_lrt_RLE.pdf",
 width = 60, height = 15); par(cex = 3); par(mar = c(4,4,4,4))
 plotRLE(Contrast$fitted.values, outline=FALSE, ylim=c(-6, 6), col=colors(), las=2)
 dev.off()
-
 
 # Build a biomaRt query
 mart <- useMart(biomart="ENSEMBL_MART_ENSEMBL", host="http://apr2022.archive.ensembl.org", path="/biomart/martservice", dataset="hsapiens_gene_ensembl")
